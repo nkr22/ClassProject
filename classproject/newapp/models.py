@@ -27,7 +27,7 @@ class Contract(models.Model):
     class Meta:
         managed = False
         db_table = 'contract'
-        verbose_name = 'List of Contract'
+        verbose_name = 'Contract'
     def __str__(self):
         return('Contract for ' + self.student + '/'+self.supervisor+'/' +self.work_term)
 
@@ -80,7 +80,7 @@ class JoinedData(models.Model):
     class Meta:
         managed = False
         db_table = 'joined_data'
-        verbose_name = 'All Data Point'
+        verbose_name = 'Data Point'
     def __str__(self):
         return('All Data for ' + self.first_name + ' '+ self.last_name)
     
@@ -95,7 +95,7 @@ class Person(models.Model):
     class Meta:
         managed = False
         db_table = 'person'
-        verbose_name = 'All Person'
+        verbose_name = 'Person'
     def __str__(self):
         return(self.first_name + ' '+ self.last_name)
 
@@ -108,10 +108,14 @@ class Position(models.Model):
     class Meta:
         managed = False
         db_table = 'position'
-        verbose_name = 'All Position'
+        verbose_name = 'Position'
     
     def __str__(self):
-        return(self.position_type + self.class_code)
+        if self.class_code ==None :
+            return str(self.position_type)
+        else:
+           return(str(self.position_type) + ' '+ str(self.class_code)) 
+        
 
 
 class Posting(models.Model):
@@ -123,7 +127,7 @@ class Posting(models.Model):
     class Meta:
         managed = False
         db_table = 'posting'
-        verbose_name = 'All Posting'
+        verbose_name = 'Posting'
     
     def __str__(self):
         return('Posting for' + self.supervisor + '/'+self.position + '/'+self.work_term)
