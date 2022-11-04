@@ -21,6 +21,7 @@ admin.site.site_title = 'IS Administration'
 admin.site.index_title = 'IS Department'
 admin.empty_value_display = '**Empty**'
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('newapp.urls')),

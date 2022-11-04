@@ -4,3 +4,4 @@ from .views import indexPageView
 urlpatterns = [
   path("", indexPageView, name="index")
 ]
+
