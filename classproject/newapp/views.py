@@ -1,6 +1,8 @@
+
 # Create your views here.
 from django.shortcuts import render
-from django.http import HttpResponse
-        
+from django.http import HttpResponse  
+
 def indexPageView(request) :
-    return render(request, 'apppages/index.html')    
+    return render(request, 'newAppPages/index.html')
+

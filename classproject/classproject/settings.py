@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 import os
 
@@ -32,14 +33,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'newapp.apps.NewappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'django.contrib.sites',
-    'newapp.apps.NewappConfig',
+    'django.contrib.sites',
+
 ]
 
 MIDDLEWARE = [
@@ -81,9 +83,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'is_department_employment',
         'USER': 'root',
-        'PASSWORD': 'password_here',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'PASSWORD': 'N0elia0407!',
+        'HOST':'localhost',
+        'PORT':'3306',
+
     }
 }
 
@@ -126,7 +129,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'classproject/static')
-]           
+] 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

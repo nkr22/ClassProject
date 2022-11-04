@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+admin.site.site_header = 'BYU IS Department Administration'
+admin.site.site_title = 'IS Administration'
+admin.site.index_title = 'IS Department'
+admin.empty_value_display = '**Empty**'
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('newapp.urls')),
