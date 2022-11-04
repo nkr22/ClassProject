@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 admin.site.site_header = 'BYU IS Department Administration'
 admin.site.site_title = 'IS Administration'
@@ -23,4 +23,5 @@ admin.empty_value_display = '**Empty**'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('newapp.urls')),
 ]
