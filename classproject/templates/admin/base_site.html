@@ -1,12 +1,13 @@
 {% extends "admin/base.html" %}
-{% load static from staticfiles %} # This might be just {% load static %} in your ENV
 
-{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
-
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "css/admin-extra.css" %}" />{% endblock %}
-
-{% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% comment %} {% load i18n  eatn_tags static %} {% endcomment %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }} | {% trans "BYU IS Department Administration" %}{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/admin.css" %}"/>
 {% endblock %}
-
+{% block branding %}
+    <h1 id="site-name">{% trans "BYU IS Department Administration" %}</h1>
+{% endblock %}
 {% block nav-global %}{% endblock %}
