@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="en-us" dir="ltr">
+
+<head>
+    {% comment %} title bar {% endcomment %}
+    <title>BYU IS Department</title>
+
+    {% comment %} link to stylesheets {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/nav_sidebar.css">
+    <script src="/static/admin/js/nav_sidebar.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="/static/admin/admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css">
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+    
+    {% comment %} navigation bar {% endcomment %}
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name">BYU IS Department Employee Data</h1>
+        </div>
+        
+        <div id="user-tools">
+            <a href="/admin">Admin Page</a>
+        </div>
+    </div>
+
+</head>
+
+<br><br><br>
+{% comment %} main body/tableau dashboards {% endcomment %}
+<div style="width:1000px; margin:0 auto;">
+{% block content %}
+{% endblock %}
+</div>
+<br><br><br>
+
