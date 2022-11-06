@@ -31,6 +31,20 @@ class Contract(models.Model):
     def __str__(self):
         return('Contract for ' + self.student + '/'+self.supervisor+'/' +self.work_term)
 
+
+class EmailDefault(models.Model):
+    email_id = models.AutoField(primary_key=True)
+    email_to_send = models.CharField(max_length=500, blank=True, null=True)
+    email_label = models.CharField(max_length=45, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'email_default'
+        verbose_name = 'Email Default'
+    def __str__(self):
+        return(self.email_label)
+     
+
 class EmploymentHistory(models.Model):
     student = models.ForeignKey('Person', models.DO_NOTHING)
     employer = models.ForeignKey('PreviousEmployer', models.DO_NOTHING)
@@ -183,6 +197,7 @@ class Supervisors(models.Model):
 class WorkTerm(models.Model):
     semester = models.CharField(max_length=6, blank=True, null=True)
     year = models.CharField(max_length=10, blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
