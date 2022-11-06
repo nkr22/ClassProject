@@ -21,7 +21,7 @@ class Contract(models.Model):
     termination_date = models.DateField(blank=True, null=True)
     qualtrics_survey_sent = models.CharField(max_length=7, blank=True, null=True)
     eform_submission_date = models.DateField(blank=True, null=True)
-    authorization_to_work_received = models.IntegerField(blank=True, null=True)
+    authorization_to_work_received = models.BooleanField(blank=True, null=True)
     authorization_to_work_sent = models.DateField(blank=True, null=True)
 
     class Meta:
@@ -38,15 +38,23 @@ class EmploymentHistory(models.Model):
     class Meta:
         managed = False
         db_table = 'employment_history'
-        verbose_name = 'Employment Historie'
+        verbose_name = 'Employment History'
+        verbose_name_plural = 'Employment Histories'
     def __str__(self):
         return('History for' + self.student + '/'+self.supervisor)
 
 
 class JoinedData(models.Model):
+    EMPL_RECORD = {
+        (0, '0'),
+        (1, '1'),
+        (2, '2'),
+        (3, '3')
+    }
+
     first_name = models.CharField(max_length=45, blank=True, null=True)
     last_name = models.CharField(max_length=45, blank=True, null=True)
-    international = models.IntegerField(blank=True, null=True)
+    international = models.BooleanField(blank=True, null=True)
     gender = models.CharField(max_length=6, blank=True, null=True)
     email_address = models.CharField(max_length=100, blank=True, null=True)
     expected_hours = models.IntegerField(blank=True, null=True)
@@ -57,7 +65,7 @@ class JoinedData(models.Model):
     position_type = models.CharField(max_length=45, blank=True, null=True)
     position_class = models.CharField(max_length=50, blank=True, null=True)
     class_code = models.CharField(max_length=10, blank=True, null=True)
-    empl_record = models.CharField(max_length=1, blank=True, null=True)
+    empl_record = models.CharField(max_length=1, choices=EMPL_RECORD, blank=True, null=True)
     supervisor_first_name = models.CharField(max_length=45, blank=True, null=True)
     supervisor_last_name = models.CharField(max_length=45, blank=True, null=True)
     hire_date = models.DateField(blank=True, null=True)
@@ -66,13 +74,13 @@ class JoinedData(models.Model):
     pay_increase_amount = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     increase_input_date = models.DateField(blank=True, null=True)
     program_year = models.CharField(max_length=22, blank=True, null=True)
-    pays_grad_tuition = models.IntegerField(blank=True, null=True)
-    name_change_completed = models.IntegerField(blank=True, null=True)
+    pays_grad_tuition = models.BooleanField(blank=True, null=True)
+    name_change_completed = models.BooleanField(blank=True, null=True)
     notes = models.CharField(max_length=200, blank=True, null=True)
     termination_date = models.DateField(blank=True, null=True)
     qualtrics_survey_sent = models.CharField(max_length=7, blank=True, null=True)
     eform_submission_date = models.DateField(blank=True, null=True)
-    authorization_to_work_received = models.IntegerField(blank=True, null=True)
+    authorization_to_work_received = models.BooleanField(blank=True, null=True)
     authorization_to_work_sent = models.DateField(blank=True, null=True)
     byu_last_name = models.CharField(max_length=45, blank=True, null=True)
     byu_first_name = models.CharField(max_length=45, blank=True, null=True)
@@ -146,16 +154,23 @@ class PreviousEmployer(models.Model):
 
 
 class Students(models.Model):
-    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', primary_key=True)
+    EMPL_RECORD = {
+        (0, '0'),
+        (1, '1'),
+        (2, '2'),
+        (3, '3')
+    }
+
+    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', name='Student', primary_key=True)
     byu_first_name = models.CharField(max_length=45, blank=True, null=True)
     byu_last_name = models.CharField(max_length=45, blank=True, null=True)
-    international = models.IntegerField(blank=True, null=True)
+    international = models.BooleanField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     byu_id = models.CharField(max_length=20, blank=True, null=True)
-    empl_record = models.CharField(max_length=1, blank=True, null=True)
+    empl_record = models.CharField(max_length=1, choices=EMPL_RECORD, blank=True, null=True)
     program_year = models.CharField(max_length=22, blank=True, null=True)
-    pays_grad_tuition = models.IntegerField(blank=True, null=True)
-    name_change_completed = models.IntegerField(blank=True, null=True)
+    pays_grad_tuition = models.BooleanField(blank=True, null=True)
+    name_change_completed = models.BooleanField(blank=True, null=True)
     notes = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
@@ -169,7 +184,7 @@ class Students(models.Model):
 
 
 class Supervisors(models.Model):
-    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', primary_key=True)
+    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', name='Supervisor', primary_key=True)
 
     class Meta:
         managed = False
