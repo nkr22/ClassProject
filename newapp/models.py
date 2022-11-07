@@ -172,7 +172,7 @@ class Person(models.Model):
 class Position(models.Model):
     position_type = models.CharField(max_length=45, blank=True, null=True)
     class_code = models.CharField(max_length=10, blank=True, null=True)
-    position_class = models.CharField(max_length=50, blank=True, null=True)
+    course_code = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -180,10 +180,10 @@ class Position(models.Model):
         verbose_name = 'Position'
     
     def __str__(self):
-        if self.class_code ==None :
+        if self.course_code ==None :
             return str(self.position_type)
         else:
-           return(f'{self.position_type} {self.class_code}')
+           return(f'{self.position_type} {self.course_code}')
         
 
 
@@ -275,7 +275,7 @@ class WorkTerm(models.Model):
 
     semester = models.CharField(max_length=6, choices=SEMESTER, blank=True, null=True)
     year = models.CharField(max_length=10, blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
+    # start_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False
