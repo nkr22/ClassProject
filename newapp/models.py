@@ -118,7 +118,7 @@ class JoinedData(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     byu_id = models.CharField(max_length=20, blank=True, null=True)
     position_type = models.CharField(max_length=45, blank=True, null=True)
-    position_class = models.CharField(max_length=50, blank=True, null=True)
+    course_code = models.CharField(max_length=45, blank=True, null=True)
     class_code = models.CharField(max_length=10, blank=True, null=True)
     empl_record = models.CharField(max_length=1, choices=EMPL_RECORD, blank=True, null=True)
     supervisor_first_name = models.CharField(max_length=45, blank=True, null=True)
@@ -171,8 +171,8 @@ class Person(models.Model):
 
 class Position(models.Model):
     position_type = models.CharField(max_length=45, blank=True, null=True)
+    course_code = models.CharField(max_length=45, blank=True, null=True)
     class_code = models.CharField(max_length=10, blank=True, null=True)
-    course_code = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -183,7 +183,8 @@ class Position(models.Model):
         if self.course_code ==None :
             return str(self.position_type)
         else:
-           return(f'{self.position_type} {self.course_code}')
+           return(f'{self.position_type} {self.course_code} - {self.class_code}')
+
         
 
 
