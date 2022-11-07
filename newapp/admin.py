@@ -1,20 +1,25 @@
 from django.contrib import admin
-from .models import Contract, EmploymentHistory, JoinedData, Person, Position, Posting, PreviousEmployer, Students, Supervisors, WorkTerm
+from .models import Contract, EmailDefault, EmploymentHistory, JoinedData, Position, Posting, PreviousEmployer, Students, Supervisors, WorkTerm, Person
  
 admin.site.register(Contract)
 class RequestDemoAdmin(admin.ModelAdmin):
   list_display = [field.name for field in
 Contract._meta.get_fields()]
 
+admin.site.register(EmailDefault)
+class RequestDemoAdmin(admin.ModelAdmin):
+  list_display = [field.name for field in
+EmailDefault._meta.get_fields()]
+
 admin.site.register(EmploymentHistory)
 class RequestDemoAdmin(admin.ModelAdmin):
   list_display = [field.name for field in
 EmploymentHistory._meta.get_fields()]
 
-admin.site.register(JoinedData)
-class RequestDemoAdmin(admin.ModelAdmin):
-  list_display = [field.name for field in
-JoinedData._meta.get_fields()]
+# admin.site.register(JoinedData)
+# class RequestDemoAdmin(admin.ModelAdmin):
+#   list_display = [field.name for field in
+# JoinedData._meta.get_fields()]
 
 
 admin.site.register(Person)

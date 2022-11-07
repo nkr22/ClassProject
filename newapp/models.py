@@ -9,6 +9,12 @@ from django.db import models
 
 
 class Contract(models.Model):
+    SURVEY_SENT = {
+        ('Sent', 'Sent'),
+        ('Checked', 'Checked'),
+        ('Not yet', 'Not yet')
+    }
+
     student = models.ForeignKey('Person', models.DO_NOTHING, related_name='studentid')
     supervisor = models.ForeignKey('Person', models.DO_NOTHING)
     position = models.ForeignKey('Position', models.DO_NOTHING)
@@ -19,7 +25,7 @@ class Contract(models.Model):
     pay_increase_amount = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     increase_input_date = models.DateField(blank=True, null=True)
     termination_date = models.DateField(blank=True, null=True)
-    qualtrics_survey_sent = models.CharField(max_length=7, blank=True, null=True)
+    qualtrics_survey_sent = models.CharField(max_length=7, choices=SURVEY_SENT, blank=True, null=True)
     eform_submission_date = models.DateField(blank=True, null=True)
     authorization_to_work_received = models.BooleanField(blank=True, null=True)
     authorization_to_work_sent = models.DateField(blank=True, null=True)
@@ -29,7 +35,21 @@ class Contract(models.Model):
         db_table = 'contract'
         verbose_name = 'Contract'
     def __str__(self):
-        return('Contract for ' + self.student + '/'+self.supervisor+'/' +self.work_term)
+        return(f'Contract for Student {self.student.first_name} {self.student.last_name} / Supervisor {self.supervisor} / {self.work_term}')
+
+
+class EmailDefault(models.Model):
+    email_id = models.AutoField(primary_key=True)
+    email_to_send = models.TextField(max_length=500, blank=True, null=True)
+    email_label = models.CharField(max_length=45, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'email_default'
+
+    def __str__(self):
+        return(f'{self.email_label} / {self.email_to_send}')
+
 
 class EmploymentHistory(models.Model):
     student = models.ForeignKey('Person', models.DO_NOTHING)
@@ -41,21 +61,41 @@ class EmploymentHistory(models.Model):
         verbose_name = 'Employment History'
         verbose_name_plural = 'Employment Histories'
     def __str__(self):
-        return('History for' + self.student + '/'+self.supervisor)
+        return(f'History for {self.student.first_name} {self.student.last_name} / {self.employer}')
 
 
 class JoinedData(models.Model):
     EMPL_RECORD = {
-        (0, '0'),
-        (1, '1'),
-        (2, '2'),
-        (3, '3')
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3')
+    }
+
+    PROGRAM_YEAR = {
+        ('MSB Core (IS or other)', 'MSB Core (IS or other)'),
+        ('MISM', 'MISM'),
+        ('MBA', 'MBA'),
+        ('MPA', 'MPA'),
+        ('Macc', 'Macc'),
+        ('Other majors on campus', 'Other majors on campus')
+    }
+
+    SURVEY_SENT = {
+        ('Sent', 'Sent'),
+        ('Checked', 'Checked'),
+        ('Not yet', 'Not yet')
+    }
+
+    GENDER = {
+        ('Male', 'Male'),
+        ('Female', 'Female')
     }
 
     first_name = models.CharField(max_length=45, blank=True, null=True)
     last_name = models.CharField(max_length=45, blank=True, null=True)
     international = models.BooleanField(blank=True, null=True)
-    gender = models.CharField(max_length=6, blank=True, null=True)
+    gender = models.CharField(max_length=6, choices=GENDER, blank=True, null=True)
     email_address = models.CharField(max_length=100, blank=True, null=True)
     expected_hours = models.IntegerField(blank=True, null=True)
     semester = models.CharField(max_length=6, blank=True, null=True)
@@ -73,12 +113,12 @@ class JoinedData(models.Model):
     last_pay_increase = models.DateField(blank=True, null=True)
     pay_increase_amount = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     increase_input_date = models.DateField(blank=True, null=True)
-    program_year = models.CharField(max_length=22, blank=True, null=True)
+    program_year = models.CharField(max_length=22, choices=PROGRAM_YEAR, blank=True, null=True)
     pays_grad_tuition = models.BooleanField(blank=True, null=True)
     name_change_completed = models.BooleanField(blank=True, null=True)
-    notes = models.CharField(max_length=200, blank=True, null=True)
+    notes = models.TextField(max_length=200, blank=True, null=True)
     termination_date = models.DateField(blank=True, null=True)
-    qualtrics_survey_sent = models.CharField(max_length=7, blank=True, null=True)
+    qualtrics_survey_sent = models.CharField(max_length=7, choices=SURVEY_SENT, blank=True, null=True)
     eform_submission_date = models.DateField(blank=True, null=True)
     authorization_to_work_received = models.BooleanField(blank=True, null=True)
     authorization_to_work_sent = models.DateField(blank=True, null=True)
@@ -89,15 +129,21 @@ class JoinedData(models.Model):
         managed = False
         db_table = 'joined_data'
         verbose_name = 'Data Point'
+        abstract = True
     def __str__(self):
-        return('All Data for ' + self.first_name + ' '+ self.last_name)
+        return(f'All Data for {self.first_name} {self.last_name}')
     
 
 
 class Person(models.Model):
+    GENDER = {
+        ('Male', 'Male'),
+        ('Female', 'Female')
+    }
+
     first_name = models.CharField(max_length=45, blank=True, null=True)
     last_name = models.CharField(max_length=45, blank=True, null=True)
-    gender = models.CharField(max_length=6, blank=True, null=True)
+    gender = models.CharField(max_length=6, choices=GENDER, blank=True, null=True)
     email_address = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
@@ -105,7 +151,7 @@ class Person(models.Model):
         db_table = 'person'
         verbose_name = 'Person'
     def __str__(self):
-        return(self.first_name + ' '+ self.last_name)
+        return(f'{self.first_name} {self.last_name}')
 
 
 class Position(models.Model):
@@ -122,7 +168,7 @@ class Position(models.Model):
         if self.class_code ==None :
             return str(self.position_type)
         else:
-           return(str(self.position_type) + ' '+ str(self.class_code)) 
+           return(f'{self.position_type} {self.class_code}')
         
 
 
@@ -138,7 +184,7 @@ class Posting(models.Model):
         verbose_name = 'Posting'
     
     def __str__(self):
-        return('Posting for' + self.supervisor + '/'+self.position + '/'+self.work_term)
+        return(f'Posting for {self.supervisor.first_name} {self.supervisor.last_name} / {self.position} / {self.work_term}')
 
 
 class PreviousEmployer(models.Model):
@@ -149,29 +195,38 @@ class PreviousEmployer(models.Model):
         db_table = 'previous_employer'
         verbose_name = 'Previous Employer'
     def __str__(self):
-        return(self.employer_name)
+        return(f'{self.employer_name}')
     
 
 
 class Students(models.Model):
     EMPL_RECORD = {
-        (0, '0'),
-        (1, '1'),
-        (2, '2'),
-        (3, '3')
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3')
     }
 
-    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', name='Student', primary_key=True)
+    PROGRAM_YEAR = {
+        ('MSB Core (IS or other)', 'MSB Core (IS or other)'),
+        ('MISM', 'MISM'),
+        ('MBA', 'MBA'),
+        ('MPA', 'MPA'),
+        ('Macc', 'Macc'),
+        ('Other majors on campus', 'Other majors on campus')
+    }
+
+    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', verbose_name='Person', primary_key=True)
     byu_first_name = models.CharField(max_length=45, blank=True, null=True)
     byu_last_name = models.CharField(max_length=45, blank=True, null=True)
     international = models.BooleanField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     byu_id = models.CharField(max_length=20, blank=True, null=True)
     empl_record = models.CharField(max_length=1, choices=EMPL_RECORD, blank=True, null=True)
-    program_year = models.CharField(max_length=22, blank=True, null=True)
+    program_year = models.CharField(max_length=22, choices=PROGRAM_YEAR, blank=True, null=True)
     pays_grad_tuition = models.BooleanField(blank=True, null=True)
     name_change_completed = models.BooleanField(blank=True, null=True)
-    notes = models.CharField(max_length=200, blank=True, null=True)
+    notes = models.TextField(max_length=200, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -179,12 +234,12 @@ class Students(models.Model):
         verbose_name = 'Student'
     
     def __str__(self):
-        return(self.byu_first_name + ' '+ self.byu_last_name)
+        return(f'{self.byu_first_name} {self.byu_last_name}')
     
 
 
 class Supervisors(models.Model):
-    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', name='Supervisor', primary_key=True)
+    id = models.OneToOneField(Person, models.DO_NOTHING, db_column='id', verbose_name='Person', primary_key=True)
 
     class Meta:
         managed = False
@@ -192,11 +247,18 @@ class Supervisors(models.Model):
         verbose_name = 'Supervisor'
     
     def __str__(self):
-        return(str(self.id) )
+        return(str(self.id))
 
 
 class WorkTerm(models.Model):
-    semester = models.CharField(max_length=6, blank=True, null=True)
+    SEMESTER = {
+        ('Winter', 'Winter'),
+        ('Spring', 'Spring'),
+        ('Summer', 'Summer'),
+        ('Fall', 'Fall'),
+    }
+
+    semester = models.CharField(max_length=6, choices=SEMESTER, blank=True, null=True)
     year = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
@@ -204,4 +266,4 @@ class WorkTerm(models.Model):
         db_table = 'work_term'
         verbose_name = 'Semester/Year Term'
     def __str__(self):
-        return(self.semester + ' '+ self.year)
+        return(f'{self.semester} {self.year}')
