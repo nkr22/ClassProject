@@ -1,15 +1,17 @@
 from django.contrib import admin
-from .models import Contract, EmailDefault, EmploymentHistory, JoinedData, Position, Posting, PreviousEmployer, Students, Supervisors, WorkTerm, Person
+from django.db import models
+
+
+from .models import Contract, EmploymentHistory, JoinedData, Person, Position, Posting, PreviousEmployer, Students, Supervisors, WorkTerm, EmailDefault
+
+
+
  
 admin.site.register(Contract)
 class RequestDemoAdmin(admin.ModelAdmin):
   list_display = [field.name for field in
 Contract._meta.get_fields()]
 
-admin.site.register(EmailDefault)
-class RequestDemoAdmin(admin.ModelAdmin):
-  list_display = [field.name for field in
-EmailDefault._meta.get_fields()]
 
 admin.site.register(EmploymentHistory)
 class RequestDemoAdmin(admin.ModelAdmin):
@@ -58,3 +60,7 @@ class RequestDemoAdmin(admin.ModelAdmin):
   list_display = [field.name for field in
 WorkTerm._meta.get_fields()]
 
+admin.site.register(EmailDefault)
+class RequestDemoAdmin(admin.ModelAdmin):
+  list_display = [field.name for field in
+EmailDefault._meta.get_fields()]
