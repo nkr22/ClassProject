@@ -1,3 +1,8 @@
+/* body{background: #000;}
+.container{
+    color: blueviolet;
+} */
+
 @charset "UTF-8";
 /*!
 * Start Bootstrap - SB Admin v7.0.5 (https://startbootstrap.com/template/sb-admin)
@@ -76,14 +81,6 @@
   }
 }
 
-<<<<<<< HEAD
-
-caption{
-  background-color: black;
-}
-
-=======
->>>>>>> 115aa765e76f4c2874237a0f67ccc8c3edcd14cc
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
@@ -310,7 +307,7 @@ svg {
 }
 
 table {
-  caption-side: bottom;
+  caption-side: top;
   border-collapse: collapse;
 }
 
