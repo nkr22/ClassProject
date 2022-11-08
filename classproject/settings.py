@@ -153,3 +153,4 @@ EMAIL_HOST_USER = 'mattcperry382@gmail.com'
 EMAIL_HOST_PASSWORD = 'nhadtuqlbvvbzjef'
 
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
