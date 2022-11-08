@@ -87,8 +87,15 @@ DATABASES = {
         'PASSWORD': 'qpl7crJkTLY',
         'HOST':'localhost',
         'PORT':'3306',
-
-    }
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'heroku_e8c7056dac34248',
+    #     'USER': 'b0f26879a193bb',
+    #     'PASSWORD': 'e62d4557',
+    #     'HOST':'us-cdbr-east-06.cleardb.net',
+    #     'PORT':'3306',
+    # }
 }
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
