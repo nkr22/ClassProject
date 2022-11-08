@@ -39,19 +39,6 @@ class Contract(models.Model):
         return(f'Contract for Student {self.student.first_name} {self.student.last_name} / Supervisor {self.supervisor} / {self.work_term}')
 
 
-class EmailDefault(models.Model):
-    email_id = models.AutoField(primary_key=True)
-    email_to_send = models.TextField(max_length=500, blank=True, null=True)
-    email_label = models.CharField(max_length=45, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'email_default'
-
-    def __str__(self):
-        return(f'{self.email_label} / {self.email_to_send}')
-
-
 
 class EmailDefault(models.Model):
     email_id = models.AutoField(primary_key=True)
